@@ -4,6 +4,7 @@ from rest_framework.views import Response, APIView
 from rest_framework import status
 
 from .serializers import ProcessPhotoInputSerializer
+from .processors import RemoveBackground
 
 class ProcessPhoto(APIView):
     parser_classes = (MultiPartParser, FormParser)
@@ -20,6 +21,9 @@ class ProcessPhoto(APIView):
         height = ['height']
         background = ['background']
         enhance = ['enhance']
+
+        print(photo)
+        result = RemoveBackground(photo)
 
         return Response({
             'code': status.HTTP_200_OK,
