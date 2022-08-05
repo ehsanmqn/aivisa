@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 from aivisa_engine.views import ProcessPhoto
+from django.conf import settings
+from django.conf.urls.static import static
 
 engine_patterns = [
     path('process/', ProcessPhoto.as_view(), name='process-photo'),
@@ -38,4 +40,4 @@ urlpatterns = [
 
     # API root path
     path("api/", include(api_patterns), name="api"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

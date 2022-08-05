@@ -29,6 +29,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+OUTPUT_ROOT = os.path.join(BASE_DIR, 'media/result/')
+
+MEDIA_URL = "/media/"
+INPUT_PHOTO_URL = "photos/"
+OUTPUT_PHOTO_URL = "result/"
 
 # Application definition
 

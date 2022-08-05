@@ -1,5 +1,8 @@
 from rest_framework import serializers
 
+from .models import Photo
+
+
 class ProcessPhotoInputSerializer(serializers.Serializer):
     photo = serializers.ImageField(required=True, allow_empty_file=False)
     width = serializers.IntegerField(required=True)
@@ -9,3 +12,17 @@ class ProcessPhotoInputSerializer(serializers.Serializer):
     blue = serializers.IntegerField(required=False, min_value=0, max_value=255)
     enhance = serializers.BooleanField(required=False)
 
+
+class PhotoModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = [
+            'uuid',
+            'photo',
+            'title',
+            'width',
+            'height',
+            'result'
+        ]
+
+        model = Photo
