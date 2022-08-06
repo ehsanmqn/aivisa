@@ -10,10 +10,11 @@ def RemoveBackground(data):
                     alpha_matting=True,
                     # alpha_matting_foreground_threshold=300,
                     # alpha_matting_background_threshold=20,
-                    alpha_matting_erode_size=25,
+                    alpha_matting_erode_size=5,
                     # only_mask=True,
-                    # post_process_mask=True,
+                    post_process_mask=True,
                     session=session
                     )
 
     return output
+

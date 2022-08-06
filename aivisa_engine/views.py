@@ -4,8 +4,6 @@ from PIL import Image
 import cv2
 
 from django.conf import settings
-from django.core.files import File
-from django.core.files.base import ContentFile
 from django.utils.translation import gettext_lazy as _
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.views import Response, APIView
@@ -38,7 +36,14 @@ class ProcessPhoto(APIView):
 
         object = photo_model.create_photo(photo=photo, title=photo, width=width, height=height)
 
-        image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
+        image = cv2.imread(settings.MEDIA_ROOT + str(object.photo))
+
+        if image is None:
+            return Response({
+                'code': status.HTTP_400_BAD_REQUEST,
+                'message': _('A problem related to image happened'),
+            }, status=status.HTTP_400_BAD_REQUEST)
+
         result = RemoveBackground(image)
 
         result_file_path = settings.OUTPUT_ROOT + str(object.uuid) + ".png"
@@ -54,5 +59,5 @@ class ProcessPhoto(APIView):
             'code': status.HTTP_200_OK,
             'message': _('Operation successful'),
             'photo': serialized_data
-        }, status=status.HTTP_201_CREATED)
+        }, status=status.HTTP_200_OK)
 
