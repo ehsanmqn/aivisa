@@ -32,10 +32,10 @@ class ProcessPhoto(APIView):
         blue = data.get('blue')
         enhance = data.get('enhance')
 
-        image = Image.open(io.BytesIO(photo.read()))
-
+        # Save image in DB
         object = photo_model.create_photo(photo=photo, title=photo, width=width, height=height)
 
+        # Step 1: Read image
         image = cv2.imread(settings.MEDIA_ROOT + str(object.photo))
 
         if image is None:
@@ -44,7 +44,16 @@ class ProcessPhoto(APIView):
                 'message': _('A problem related to image happened'),
             }, status=status.HTTP_400_BAD_REQUEST)
 
+        # Step2: Crop image
         cropped = detect_face(image, 600, 600, 310)
+
+        if cropped is None:
+            return Response({
+                'code': status.HTTP_400_BAD_REQUEST,
+                'message': _('No face detected in the image'),
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # Step3: Remove background
         result = remove_background(cropped)
 
         result_file_path = settings.OUTPUT_ROOT + str(object.uuid) + ".png"
