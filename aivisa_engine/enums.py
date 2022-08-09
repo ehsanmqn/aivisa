@@ -6,6 +6,9 @@ class Paper_4R(Enum):
     height = 4
     width = 6
 
+    def __str__(self):
+        return str(self.height) + " x " + str(self.width)
+
     def getSizePixel(self):
         return self.height * 300, self.width * 300
 
@@ -15,6 +18,9 @@ class Paper_5R(Enum):
     height = 5
     width = 7
 
+    def __str__(self):
+        return str(self.height) + " x " + str(self.width)
+
     def getSizePixel(self):
         return self.height * 300, self.width * 300
 
@@ -22,6 +28,9 @@ class Paper_5R(Enum):
 class Paper_6R(Enum):
     height = 6
     width = 8
+
+    def __str__(self):
+        return str(self.height) + " x " + str(self.width)
 
     def getSizePixel(self):
         return self.height * 300, self.width * 300
@@ -32,6 +41,9 @@ class Paper_8R(Enum):
     height = 8
     width = 10
 
+    def __str__(self):
+        return str(self.height) + " x " + str(self.width)
+
     def getSizePixel(self):
         return self.height * 300, self.width * 300
 
@@ -40,6 +52,9 @@ class Paper_8R(Enum):
 class Paper_SBR(Enum):
     height = 8
     width = 12
+
+    def __str__(self):
+        return str(self.height) + " x " + str(self.width)
 
     def getSizePixel(self):
         return self.height * 300, self.width * 300
