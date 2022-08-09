@@ -10,7 +10,7 @@ from rest_framework.views import Response, APIView
 from rest_framework import status
 
 from .serializers import ProcessPhotoInputSerializer, PhotoModelSerializer
-from .processors import RemoveBackground
+from .processors import RemoveBackground, detect_face
 from .models import Photo as photo_model
 
 
@@ -44,7 +44,8 @@ class ProcessPhoto(APIView):
                 'message': _('A problem related to image happened'),
             }, status=status.HTTP_400_BAD_REQUEST)
 
-        result = RemoveBackground(image)
+        cropped = detect_face(image, 600, 600, 310)
+        result = RemoveBackground(cropped)
 
         result_file_path = settings.OUTPUT_ROOT + str(object.uuid) + ".png"
         cv2.imwrite(result_file_path, result)
