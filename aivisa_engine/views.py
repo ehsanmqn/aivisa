@@ -59,8 +59,14 @@ class ProcessPhoto(APIView):
         result_file_path = settings.OUTPUT_ROOT + str(object.uuid) + ".png"
         cv2.imwrite(result_file_path, result)
 
-        result_file_url = "http://" + request.get_host() + settings.MEDIA_URL + settings.OUTPUT_PHOTO_URL + str(object.uuid) + ".png"
-        object.result = result_file_url
+        single_file_url = "http://" + request.get_host() + settings.MEDIA_URL + settings.OUTPUT_PHOTO_URL + str(
+            object.uuid) + "-single.png"
+        object.single = single_file_url
+
+        multi_file_url = "http://" + request.get_host() + settings.MEDIA_URL + settings.OUTPUT_PHOTO_URL + str(
+            object.uuid) + "-multi.png"
+        object.multi = multi_file_url
+
         object.save()
 
         serialized_data = PhotoModelSerializer(object, many=False, context={"request": request}).data
@@ -70,4 +76,3 @@ class ProcessPhoto(APIView):
             'message': _('Operation successful'),
             'photo': serialized_data
         }, status=status.HTTP_200_OK)
-

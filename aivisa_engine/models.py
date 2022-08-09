@@ -7,9 +7,11 @@ class Photo(models.Model):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
     title = models.TextField(default='', max_length=1024)
     photo = models.ImageField(upload_to='photos/')
-    result = models.CharField(default='', max_length=1024)
     width = models.IntegerField(default=0)
     height = models.IntegerField(default=0)
+    single = models.CharField(default='', max_length=1024)
+    multi = models.CharField(default='', max_length=1024)
+    payed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
