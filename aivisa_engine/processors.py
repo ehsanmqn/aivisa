@@ -41,7 +41,7 @@ def detect_face(image, shapeWidth, shapeHeight, faceHeight, draw=False):
         return None
 
 
-def RemoveBackground(data):
+def remove_background(data):
     session = new_session("u2net_human_seg")
 
     output = remove(data=data,
