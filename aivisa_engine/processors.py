@@ -1,10 +1,13 @@
-from rembg import remove
 import cv2
+
+from rembg import remove
 from rembg.session_factory import new_session
+
 
 cascade_classifier = cv2.CascadeClassifier(
     f"{cv2.data.haarcascades}haarcascade_frontalface_alt.xml")
 
+# This function detect face and crop image based on the detected shape
 def detect_face(image, shapeWidth, shapeHeight, faceHeight, draw=False):
     # Convert the image to grayscale for easier computation
     image_grey = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -41,6 +44,7 @@ def detect_face(image, shapeWidth, shapeHeight, faceHeight, draw=False):
         return None
 
 
+# This function perform SOD to remove background from the input image
 def remove_background(data):
     session = new_session("u2net_human_seg")
 
