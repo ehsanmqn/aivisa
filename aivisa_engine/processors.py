@@ -1,8 +1,11 @@
 import cv2
+import numpy as np
+from math import ceil
 
 from rembg import remove
 from rembg.session_factory import new_session
 
+from .enums import Paper_4R
 
 cascade_classifier = cv2.CascadeClassifier(
     f"{cv2.data.haarcascades}haarcascade_frontalface_alt.xml")
@@ -60,3 +63,27 @@ def remove_background(data):
 
     return output
 
+
+# This function prepare printable image
+def prepare_printable_4R(image):
+    pageHeight, pageWidth, padding = Paper_4R.getSizePixel()
+
+    blank_image = 255 * np.ones(shape=[pageHeight, pageWidth, 3], dtype=np.uint8)
+
+    verticalImageCount = ceil((pageHeight - 2 * padding) // image.shape[0])
+    horiszontalImageCount = ceil((pageWidth - 2 * padding) // image.shape[1])
+
+    endRow = 0
+    for row in range(verticalImageCount):
+        startRow = endRow + padding
+        endRow = startRow + image.shape[0]
+        endCol = 0
+
+        for col in range(horiszontalImageCount):
+            startCol = endCol + padding
+            endCol = startCol + image.shape[1]
+
+            blank_image[startRow:endRow, startCol:endCol, :] = image
+
+
+    return blank_image
