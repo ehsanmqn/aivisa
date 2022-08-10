@@ -10,7 +10,7 @@ from rest_framework.views import Response, APIView
 from rest_framework import status
 
 from .serializers import ProcessPhotoInputSerializer, PhotoModelSerializer
-from .processors import remove_background, detect_face
+from .processors import remove_background, detect_face, prepare_printable_4R
 from .models import Photo as photo_model
 
 
@@ -54,14 +54,21 @@ class ProcessPhoto(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         # Step3: Remove background
-        result = remove_background(cropped)
+        single = remove_background(cropped)
 
-        result_file_path = settings.OUTPUT_ROOT + str(object.uuid) + ".png"
-        cv2.imwrite(result_file_path, result)
+        single_file_path = settings.OUTPUT_ROOT + str(object.uuid) + "-single.png"
+        cv2.imwrite(single_file_path, single)
 
         single_file_url = "http://" + request.get_host() + settings.MEDIA_URL + settings.OUTPUT_PHOTO_URL + str(
             object.uuid) + "-single.png"
         object.single = single_file_url
+
+
+        # Step 4: Prepare printable multi image
+        multi = prepare_printable_4R(single)
+
+        multi_file_path = settings.OUTPUT_ROOT + str(object.uuid) + "-multi.png"
+        cv2.imwrite(multi_file_path, multi)
 
         multi_file_url = "http://" + request.get_host() + settings.MEDIA_URL + settings.OUTPUT_PHOTO_URL + str(
             object.uuid) + "-multi.png"
