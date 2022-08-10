@@ -54,7 +54,11 @@ class ProcessPhoto(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         # Step3: Remove background
-        single = remove_background(cropped)
+        result = remove_background(cropped)
+
+        trans_mask = result[:, :, 3] == 0
+        result[trans_mask] = [255, 255, 255, 255]
+        single = cv2.cvtColor(result, cv2.COLOR_BGRA2BGR)
 
         single_file_path = settings.OUTPUT_ROOT + str(object.uuid) + "-single.png"
         cv2.imwrite(single_file_path, single)

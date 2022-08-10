@@ -5,7 +5,7 @@ from math import ceil
 from rembg import remove
 from rembg.session_factory import new_session
 
-from .enums import Paper_4R
+from .enums import Paper4R
 
 cascade_classifier = cv2.CascadeClassifier(
     f"{cv2.data.haarcascades}haarcascade_frontalface_alt.xml")
@@ -66,7 +66,7 @@ def remove_background(data):
 
 # This function prepare printable image
 def prepare_printable_4R(image):
-    pageHeight, pageWidth, padding = Paper_4R.getSizePixel()
+    pageHeight, pageWidth, padding = Paper4R.getSizePixel()
 
     blank_image = 255 * np.ones(shape=[pageHeight, pageWidth, 3], dtype=np.uint8)
 
