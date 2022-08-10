@@ -22,7 +22,8 @@ class PhotoModelSerializer(serializers.ModelSerializer):
             'title',
             'width',
             'height',
-            'result'
+            'single',
+            'multi'
         ]
 
         model = Photo
