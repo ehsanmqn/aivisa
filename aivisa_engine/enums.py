@@ -3,7 +3,11 @@
 class Paper4R():
     height = 4
     width = 6
-    padding = 50
+    padding = 0
+    padding_top = 0
+    padding_bottom = 0
+    padding_left = 1
+    padding_right = 1
 
     def __init__(self) -> None:
         pass

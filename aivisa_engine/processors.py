@@ -27,7 +27,7 @@ def detect_face(image, shapeWidth, shapeHeight, faceHeight, draw=False):
         calculatedShapeHeight = h * shapeHeight // faceHeight
 
         midX = x + w // 2
-        midY = y + h // 2 + 100
+        midY = y + h // 2 + 50
         X = midX - (calculatedShapeWidth // 2)
         Y = midY - (calculatedShapeHeight // 2)
         W = calculatedShapeWidth
