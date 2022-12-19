@@ -54,7 +54,7 @@ class ProcessPhoto(APIView):
             }, status=status.HTTP_400_BAD_REQUEST)
 
         # Step3: Remove background
-        result = remove_background(cropped)
+        result = np.array(remove_background(cropped))
 
         trans_mask = result[:, :, 3] == 0
         result[trans_mask] = [255, 255, 255, 255]
@@ -66,7 +66,6 @@ class ProcessPhoto(APIView):
         single_file_url = "http://" + request.get_host() + settings.MEDIA_URL + settings.OUTPUT_PHOTO_URL + str(
             object.uuid) + "-single.png"
         object.single = single_file_url
-
 
         # Step 4: Prepare printable multi image
         multi = prepare_printable_4R(single)
