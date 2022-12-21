@@ -1,5 +1,5 @@
 # aivisa
-aivisa is a Visa photo id maker. Rhe project implemented by Django and DRF. In order to use this project you have to run the (aivisa-www)[https://github.com/ehsanmqn/aivisa-www] or using its API directly.
+aivisa is a Visa photo id maker. Rhe project implemented by Django and DRF. In order to use this project you have to run the [aivisa-www](https://github.com/ehsanmqn/aivisa-www) or using its API directly.
 
 ## License
 
